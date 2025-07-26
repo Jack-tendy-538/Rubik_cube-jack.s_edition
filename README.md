@@ -28,3 +28,9 @@ terminology:
 ## implete status
 I'm just a student, rather than prof developer.
 This means *I'll never finish it*!
+and, my first programming lang is python, thus expressing myself in C++
+    is quite a challenge for me!
+唉，说英语真是太难了，干脆说中文算了（我才不会告诉你我来自湖南省*州市**县第一中学）
+### advertisements
+我们学校大1班，已经接入[ClassIsland](https://github.com/ClassIsland/ClassIsland/)!
+快来玩我的[人机游戏](https://github.com/Jack-tendy-538/a-advanced-game)吧！

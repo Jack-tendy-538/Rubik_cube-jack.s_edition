@@ -69,12 +69,16 @@ class Piece:
     STEP = 10  # Number of steps for a full rotation
     def identify(self, face):
         return self.direction.get(face, None)
-    
+    def _on_the_right_face(self, coord, layer_num, reverse_num=1):
+        """Check if the piece is on the right face for a given layer."""
+        n = self.dimensions
+        return (n+1) / 2 - layer_num <= coord* reverse_num < (n+1) / 2
+
     def _step(self, face,theta):
         matrix = self.rotting_matrix[self.crease[face][0]](theta)
         for key in self.direction:
-            self.direction[key] = matrix.cross(self.direction[key])
-        self.position = matrix.cross(self.position).reshape(3)
+            self.direction[key] = (matrix@self.direction[key])
+        self.position = (matrix@self.position).reshape(3)
     
     async def makeMove(self, face, t, layer_num=1):
         """Perform a move on the cube asynchronously,
@@ -83,13 +87,13 @@ class Piece:
         """
         if face not in list(self.crease.keys()):
             raise ValueError(f"Invalid face: {face}")
-        elif tt not in [1,2,3]:
+        elif t not in [1,2,3]:
             raise ValueError(f"Invalid time: {t}")
         elif face in ["x","y","z"]:
-            increment = t/STEP
+            increment = (math.pi/2)*t/STEP
             theta = 0
             if t == 3:
-                increment = -1/STEP
+                increment = (math.pi/2)*(-1)/STEP
             for i in range(STEP):
                 self._step(face, theta)
                 await asyncio.sleep(TICK)
@@ -97,7 +101,7 @@ class Piece:
         else:
             if face in self.position_to_face:
                 axis, direction = self.position_to_face[face]
-                if self.position[axis] * direction :
+                if self._on_the_right_face(self.position[axis-1], layer_num, direction):
                     # the piece is on the right face
                     await self.makeMove(crease[face][0], t*crease[face][1]%4, layer_num)
                 else:
@@ -106,4 +110,61 @@ class Piece:
                 raise ValueError(f"Invalid face: {face}")
 
 ```
+*/
+/* And the code for corner piece is similar, with the addition of a direction attribute.
+   The code for edge piece is similar, with the addition of a direction attribute.
+   The code for center piece is similar, with the addition of a direction attribute.
+   The code for cube is similar, with the addition of a list of pieces and a method to perform moves on the cube.
+   ```python
+   class Cube:
+       def __init__(self, dimensions):
+           self.dimensions = dimensions
+           self.pieces = self._initialize_pieces()
+
+       def _initialize_pieces(self):
+           # Initialize pieces based on the dimensions of the cube
+           pieces = []
+           # Add corner, edge, and center pieces based on the dimensions
+           # all the coords will be in the range of [-dimensions/2, dimensions/2] 
+           for x in range(-self.dimensions//2, self.dimensions//2 + 1):
+               for y in range(-self.dimensions//2, self.dimensions//2 + 1):
+                   for z in range(-self.dimensions//2, self.dimensions//2 + 1):
+                       if (abs(x) == self.dimensions//2 or abs(y) == self.dimensions//2 or abs(z) == self.dimensions//2):
+                           direction = {}
+                           if z == self.dimensions//2:
+                               direction["F"] = np.array([0, 0, 1])
+                           if z == -self.dimensions//2:
+                               direction["B"] = np.array([0, 0, -1])
+                           if x == -self.dimensions//2:
+                               direction["L"] = np.array([-1, 0, 0])
+                           if x == self.dimensions//2:
+                               direction["R"] = np.array([1, 0, 0])
+                           if y == self.dimensions//2:
+                               direction["U"] = np.array([0, 1, 0])
+                           if y == -self.dimensions//2:
+                               direction["D"] = np.array([0, -1, 0])
+                           pieces.append(Piece(self.dimensions, np.array([x, y, z]), direction))
+           return pieces
+
+       async def makeMove(self, face, t, layer_num=1):
+            tasks = []
+           for piece in self.pieces:
+               tasks.append(asyncio.create_task(piece.makeMove(face, t, layer_num))
+            await asyncio.gather(*tasks)
+
+        regex = re.compile(r"([FRBLUDxyz])(\d*)")
+        def moveListToString(self, move_list):
+            """Convert a list of moves to a string."""
+            move_str = ""
+            for move in move_list:
+                match = self.regex.match(move)
+                if match:
+                    face, layer_num = match.groups()
+                    if not layer_num:
+                        layer_num = 1
+                    else:
+                        layer_num = int(layer_num)
+                    move_str += f"{face}{layer_num} "
+            return move_str.strip()
+   ```
 */
