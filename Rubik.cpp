@@ -27,6 +27,8 @@
 #include <stdexcept>
 #include <functional>
 #include <regex>
+using DirectionMap = std::map<std::string, Vector3>;
+using FaceMap = std::map<std::string, std::pair<int, int>>;
 
 /*
 in Python,we call the code as following:
@@ -146,13 +148,13 @@ private:
         {"D", {2, -1}}
     };
     std::map<std::string, std::function<Matrix3(float)>> rotting_matrix = {
-        {"x", [](float angle) {
+        {"x", [](float angle) -> Matrix3 {
             return Matrix3::rotationX(angle);
         }},
-        {"y", [](float angle) {
+        {"y", [](float angle) -> Matrix3 {
             return Matrix3::rotationY(angle);
         }},
-        {"z", [](float angle) {
+        {"z", [](float angle) -> Matrix3 {
             return Matrix3::rotationZ(angle);
         }}
     };
