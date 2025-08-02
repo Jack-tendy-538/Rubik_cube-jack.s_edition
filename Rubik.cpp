@@ -129,9 +129,6 @@ private:
     // The dimensions is an integer representing the dimensions of the cube.
     // The rotting_matrix is a dict that maps the face to the rotation matrix in the form of {"F":("z", 1), "B":("z", 3), "L":("x", 1), "R":("x", 3), "U":("y", 1), "D":("y", 3)}
     // The crease is a dict that maps the face to the rotation matrix in the form of
-    static const std::map<std::string, std::pair<std::string, int>> crease;
-    static const std::map<std::string, std::pair<int, int>> position_to_face;
-    static const std::map<std::string, std::function<Matrix3(float)>> rotting_matrix;
 
      // Direction of each face, the first element is the axis, the second is the direction
       // for example, "F" is on the positive z-axis, so its direction is (3, 1)
