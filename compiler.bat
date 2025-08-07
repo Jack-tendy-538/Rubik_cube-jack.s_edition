@@ -1,0 +1,1 @@
+g++ -shared -fPIC hook.cpp -o Rubik.so
