@@ -25,6 +25,16 @@ terminology:
 - moveListToString: a function to convert the move list to a string, which
                 can be used to display the moves in a human-readable format or to save the moves to a file.
 
+To compile this project, you need to have the following libraries installed:
+- OpenGL
+- glfw
+- glutil
+
+## usage
+Run this first to complie the code:
+```
+g++ -shared -fPIC hook.cpp -o Rubik.dll
+```
 ## implete status
 I'm just a student, rather than prof developer.
 This means *I'll never finish it*!

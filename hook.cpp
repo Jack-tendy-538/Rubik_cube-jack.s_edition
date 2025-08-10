@@ -1,6 +1,6 @@
 // This file is part of the Rubik's Cube C++ library.
 // It provides a C interface to the Cube class for use in other languages.
-// therefore, we should rewrite sth
+// therefore, we should rewrite something defined in Rubik.cpp
 extern "C"{
     #include "Rubik.cpp"
     Cube *createCube(int size, int seed) {
