@@ -1,7 +1,7 @@
 # Rubik's cube(JT's edition)
 With the number of classmates who plays Cube scaling up, we concerns more about questions like
-- how many times do the formula `RULD` take to get the Cube recovered?
-- is there an effective way to recobver a Cube?
+- how many times do the formula `RULD` take to get the Cube recovered?(the answer is 315, reached by boring experiment lasting 10 minutes)
+- is there an effective way to recover a Cube?
 Of course, these can be solved by experiments, and it definitely takes lots of time.
 What if automate it with computers?This repo might give you a different answer.
 ## doc
