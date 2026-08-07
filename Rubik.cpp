@@ -27,6 +27,8 @@
 #include <stdexcept>
 #include <functional>
 #include <regex>
+using DirectionMap = std::map<std::string, Vector3>;
+using FaceMap = std::map<std::string, std::pair<int, int>>;
 
 /*
 in Python,we call the code as following:
